@@ -1,14 +1,19 @@
 <div class="container">
-  <div class="row">
+  <div class="row mb-3">
     <div class="col-12">
       <h1>Fave SW People</h1>
     </div>
   </div>
   <div class="row">
-    <div class="col-3 d-none d-lg-block bg-danger">
-      navbar
-    </div>
-    <div class="col-12 col-lg-9 bg-info" style="min-height: 100vh;">
+      <nav class="list-group col-3 d-none d-lg-block">
+        <a class="list-group-item list-group-item-action" routerLink="/">
+          Home
+        </a>
+        <a class="list-group-item list-group-item-action" routerLink="/tsteele">
+          Tom's Faves
+        </a>
+      </nav>
+    <div class="col-12 col-lg-9">
       <router-outlet />
     </div>
   </div>
