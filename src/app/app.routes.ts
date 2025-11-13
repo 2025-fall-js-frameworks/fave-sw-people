@@ -11,8 +11,7 @@ export const routes: Routes = [
 	{
     path: "aspriggs",
     component: AspriggsFavs
-  }
-{ path: "aspriggs", component: AspriggsFavs }
+  },
     {
         path: "akoroliova", 
         component: AkoroliovaFaveSwPeople
