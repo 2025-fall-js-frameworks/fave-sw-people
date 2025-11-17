@@ -22,7 +22,10 @@ export class SwPeopleService {
         x => console.log(x)
       ),
       reduce(
-        (acc: any[], people) => acc.concat(people, [])
+        (acc: any[], people) => [
+          ...acc
+          , ...people
+        ]
         , []
       ),
       map(
