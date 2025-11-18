@@ -10,10 +10,17 @@ export class SwPeopleService {
 
   public getPeopleFromSwapiApi() {
     return this.http.get<any>('https://swapi.dev/api/people').pipe(
+
+
       map(
           Response => Response.results
       ),
+      map(
+        people => people.sort(
+          (a:any, b: any) => a.name.localeCompare(b.name)
+        )
+      )
     );
-    
+
   }
 }
