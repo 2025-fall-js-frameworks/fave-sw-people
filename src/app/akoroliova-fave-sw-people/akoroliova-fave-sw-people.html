@@ -3,11 +3,20 @@
         akoroliova's faves
     </li>
 
-@for (p of people$ | async; track p) {
+@if(people$ | async; as people) {
+    @for (p of people; track p) {
     <li class="list-group-item">
-    <input class="form-check-input me-1" type="checkbox" value="" [id]="p.name">
+    <input class="form-check-input me-3" type="checkbox" value="" [id]="p.name">
     <label class="form-check-label stretched-link" [for]="p.name">{{p.name}}</label>
   </li>
+}
+
+}
+
+@else {
+    <li class="list-group-item list-group-item-info">
+        loading...
+    </li>
 }
 
 </ul>
