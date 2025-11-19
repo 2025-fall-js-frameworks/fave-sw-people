@@ -13,8 +13,8 @@ export class SwPeopleService {
     return this.http.get<any>('https://swapi.dev/api/people').pipe(
       expand(
         page => page.next
-        ? this.http.get<any>(page.next)
-        : EMPTY
+          ? this.http.get<any>(page.next)
+          : EMPTY
       ),
       map(
         response => response.results
@@ -33,8 +33,8 @@ export class SwPeopleService {
         people => people.sort(
           (a: any, b: any) => a.name.localeCompare(b.name)
         )
-      )
+      ),
     );
-
+    
   }
 }
