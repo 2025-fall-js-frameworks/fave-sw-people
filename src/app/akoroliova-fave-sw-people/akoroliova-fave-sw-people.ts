@@ -27,4 +27,18 @@ export class AkoroliovaFaveSwPeople {
       err => console.warn(err)
     );
   }
+
+  protected async promisesWithAsyncAwait() {
+    try {
+      const page1 = await this.peopleSvc.getPeoplePageOne();
+
+      console.log(page1);
+
+      const page2 = await this.peopleSvc.getPeoplePageTwo();
+      console.log(page2);
+    }
+    catch (err) {
+      console.warn(err);
+    }
+  }
 }
