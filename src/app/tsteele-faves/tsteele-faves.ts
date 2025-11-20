@@ -9,11 +9,19 @@ import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './tsteele-faves.html',
   styleUrl: './tsteele-faves.css',
 })
-export class TsteeleFaves {
+export class TsteeleFaves implements OnInit {
   private readonly peopleSvc = inject(SwPeopleService);
   private readonly modalService = inject(NgbModal);
 
-  protected readonly people$ = this.peopleSvc.getPeopleFromSwapiApi();
+  // protected readonly people$ = this.peopleSvc.getPeopleFromSwapiApi();
+
+  protected people: any[] | undefined;
+
+  async ngOnInit() {
+  
+    this.people = await this.peopleSvc.getPeopleFromSwapiApi();
+    
+  }
 
   protected promisesAsThenables() {
     

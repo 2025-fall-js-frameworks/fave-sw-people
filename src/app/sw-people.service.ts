@@ -10,7 +10,7 @@ export class SwPeopleService {
 
   public getPeopleFromSwapiApi() {
 
-    return this.http.get<any>('https://swapi.dev/api/people').pipe(
+    const people$ = this.http.get<any>('https://swapi.dev/api/people').pipe(
       expand(
         page => page.next
           ? this.http.get<any>(page.next)
@@ -36,6 +36,7 @@ export class SwPeopleService {
       ),
     );
     
+    return firstValueFrom(people$);
   }
 
   public getPeoplePageOne() {
