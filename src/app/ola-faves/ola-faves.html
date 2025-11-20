@@ -4,6 +4,17 @@
   >
     Ola's Faves
 </li>
+
+<li class="list-group-item" > 
+    <button 
+      class="btn btn-link"
+      (click)="promisesAsThenables()"
+    >
+      Primises as "thenables"
+
+    </button>
+  </li> 
+  
     @if(people$ | async; as people){
     @for (p of people; track p){
   <li 
