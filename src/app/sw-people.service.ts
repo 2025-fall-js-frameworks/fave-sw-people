@@ -63,4 +63,5 @@ export class SwPeopleService {
 
     return firstValueFrom(pageObvservable);
   }
+
 }
