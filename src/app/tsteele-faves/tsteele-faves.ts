@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { SwPeopleService } from '../sw-people.service';
 import { AsyncPipe } from '@angular/common';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 
 type FaveDisplay = {
   name: string;
@@ -19,10 +19,10 @@ export class TsteeleFaves implements OnInit {
 
   private readonly peopleSvc = inject(SwPeopleService);
 
-  protected people$: Observable<any[]> | undefined;
+  protected people: any[] | undefined;
 
   async ngOnInit() {
-    this.people$ = this.peopleSvc.getPeopleFromSwapiApi();
+    this.people = await firstValueFrom(this.peopleSvc.getPeopleFromSwapiApi());
   }
 
   protected promisesAsThenables() {
