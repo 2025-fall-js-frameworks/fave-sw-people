@@ -24,21 +24,22 @@
   </li>
   <li class="list-group-item list-group-item-light">
     <p>
-      Faves Cout: 0
+      Faves Cout: {{faveCount()}}
     </p>
     <p>
       Faves Fun Fact: Avg Height 0cm
     </p>
   </li>
-  @if(people; as people){
-    @for (p of people; track p) {
+  @if(people().length > 0){
+    @for (p of people(); track p.name) {
       <li 
         class="list-group-item"
       >
         <input 
           class="form-check-input me-3" 
           type="checkbox" 
-          value="" 
+          [checked]="p.checked" 
+          (change)="toggleChecked(p)"
           [id]="p.name"
         >
         <label 
