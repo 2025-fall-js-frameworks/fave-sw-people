@@ -27,7 +27,7 @@
       Faves Cout: {{faveCount()}}
     </p>
     <p>
-      Faves Fun Fact: Avg Height 0cm
+      Faves Fun Fact: {{ `Avg Height ${ avgFaveHeight() }cm` }}
     </p>
   </li>
   @if(people().length > 0){

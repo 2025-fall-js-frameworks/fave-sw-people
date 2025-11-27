@@ -25,6 +25,23 @@ export class TsteeleFaves implements OnInit {
     () => this.people().filter(x => x.checked).length
   );
 
+  protected avgFaveHeight = computed(
+    () => {
+      const faves = this.people().filter(x => x.checked);
+      const sumHeight = faves.reduce(
+        (acc, x) => acc + x.heightInCentimeters 
+        , 0
+      );
+
+      // return sumHeight / faves.length;
+
+      return faves.length > 0
+        ? sumHeight / faves.length
+        : 0
+      ;
+    }
+  );
+
   async ngOnInit() {
     const people = await firstValueFrom(this.peopleSvc.getPeopleFromSwapiApi());
 
@@ -33,7 +50,7 @@ export class TsteeleFaves implements OnInit {
         x => ({
           name: x.name,
           checked: false,
-          heightInCentimeters: x.height
+          heightInCentimeters: Number.parseInt(x.height)
         })
       )
     );
