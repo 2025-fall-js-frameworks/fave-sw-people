@@ -1,6 +1,5 @@
 import { Component, computed, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { SwPeopleService } from '../sw-people.service';
-import { AsyncPipe } from '@angular/common';
 import { firstValueFrom, Observable } from 'rxjs';
 
 type FaveDisplay = {
@@ -12,7 +11,7 @@ type FaveDisplay = {
 
 @Component({
   selector: 'app-tsteele-faves',
-  imports: [AsyncPipe],
+  imports: [],
   templateUrl: './tsteele-faves.html',
   styleUrl: './tsteele-faves.css',
 })
@@ -28,17 +27,17 @@ export class TsteeleFaves implements OnInit {
 
   protected avgFaveHeight = computed(
     () => {
-      const faves = this.people().filter(x => x.checked && !x.invalidHeight);
-      const sumHeight = faves.reduce(
+      const favesWithHeightInfo = this.people().filter(x => x.checked && !x.invalidHeight);
+      const sumHeight = favesWithHeightInfo.reduce(
         (acc, x) => acc + x.heightInCentimeters 
         , 0
       );
 
-      // return sumHeight / faves.length;
+      // return sumHeight / favesWithHeightInfo.length;
 
-      return faves.length > 0
-        ? (sumHeight / faves.length).toFixed(2)
-        : "0"
+      return favesWithHeightInfo.length > 0
+        ? `${(sumHeight / favesWithHeightInfo.length).toFixed(2)}cm ${this.faveCount() != favesWithHeightInfo.length ? " **some faves have missing height information" : ""}`
+        : "N/A"
       ;
     }
   );
@@ -62,7 +61,10 @@ export class TsteeleFaves implements OnInit {
     this.people.update(currentPeople =>
       currentPeople.map(
         x => x.name === personToToggle.name
-          ? { ...x, checked: !x.checked }
+          ? { 
+              ...x
+              , checked: !x.checked 
+          }
           : x
       )
     );
