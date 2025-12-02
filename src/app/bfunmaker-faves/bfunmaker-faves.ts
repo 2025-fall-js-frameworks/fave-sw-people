@@ -1,8 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { SwPeopleService } from '../sw-people.service';
+import { AsyncPipe } from '@angular/common';
+
+type FaveDisplay = {
+  name: string;
+  checked: boolean;
+  heightInCentimeters: number;
+}
 
 @Component({
   selector: 'app-bfunmaker-faves',
-  imports: [],
+  imports: [AsyncPipe],
   templateUrl: './bfunmaker-faves.html',
   styleUrl: './bfunmaker-faves.css',
 })
