@@ -14,7 +14,6 @@ export class TsteeleFaves {
   protected readonly people$ = this.peopleSvc.getPeopleFromSwapiApi();
 
   protected promisesAsThenables() {
-
     const page1 = this.peopleSvc.getPeoplePageOne()
       .then(
         data => {
