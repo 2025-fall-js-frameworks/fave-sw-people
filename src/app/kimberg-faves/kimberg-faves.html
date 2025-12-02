@@ -27,11 +27,11 @@
       Faves Count: 0
     </p>
     <p>
-      Faves Fun Fact: Avg Height: 0cm
+      Faves Fun Fact: Avg Height 0cm
     </p>
   </li>
-  @if(people$ | async; as people){
-    @for (p of people; track p) {
+  @if(people().length > 0){
+    @for (p of people(); track p) {
       <li 
         class="list-group-item"
       >
