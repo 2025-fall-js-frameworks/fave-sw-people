@@ -2,6 +2,13 @@ import { Component, inject } from '@angular/core';
 import { SwPeopleService } from '../sw-people.service';
 import { AsyncPipe } from '@angular/common';
 
+type FaveDisplay = 
+{
+  name: string;
+  checked: boolean;
+  heightInCentimeters: number;
+};
+
 @Component({
   selector: 'app-mnguyen-faves',
   imports: [AsyncPipe],
