@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { SwPeopleService } from '../sw-people.service';
 import { firstValueFrom } from 'rxjs';
 
@@ -20,6 +20,10 @@ export class BfunmakerFaves implements OnInit {
 
   protected people: WritableSignal<FaveDisplay[]>  = signal([]);
 
+  protected faveCount = computed(
+    () => this.people().filter(x=> x.checked).length
+  );
+
   async ngOnInit() {
     const people = await firstValueFrom(this.peopleSvc.getPeopleFromSwapiApi());
 
@@ -32,6 +36,19 @@ export class BfunmakerFaves implements OnInit {
         })
       )
     )
+  }
+
+  protected readonly toggleChecked = (personToggled: FaveDisplay)=> {
+    this.people.update(
+      prevPeople => prevPeople.map(
+        person => ({
+          ...person,
+          checked: person.name === personToggled.name
+          ? !person.checked
+          : person.checked
+        })
+      )
+    );
   }
 
   protected promisesAsThenables() {
