@@ -13,6 +13,14 @@
         Promises Funn
       </button>
     </li>
+    <li class="list-group-item list-group-item-dark">
+      <p>
+        Fave's count: 0
+      </p>
+      <p>
+        Faves Fun Fact: populst eye color is green
+      </p>
+    </li>
   @if(people$ | async; as people){
     @for (p of people; track p) {
       <li 
