@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SwPeopleService } from '../sw-people.service';
 import { AsyncPipe } from '@angular/common';
 import { ConstantPool } from '@angular/compiler';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 
 type FaveDisplay = {
   name: string;
@@ -20,11 +20,13 @@ type FaveDisplay = {
 export class Yyang22Faves implements OnInit {
   private readonly peopleSvc = inject(SwPeopleService);
 
-  protected people$: Observable<any[]> | undefined; // = this.peopleSvc.getPeopleFromSwapiApi();
+  protected people: any[] | undefined; // = this.peopleSvc.getPeopleFromSwapiApi();
 
 
-  ngOnInit(): void {
-    this.people$ = this.peopleSvc.getPeopleFromSwapiApi();
+  async ngOnInit() {
+    this.people = await firstValueFrom(
+      this.peopleSvc.getPeopleFromSwapiApi()
+    );
   }
 
 
