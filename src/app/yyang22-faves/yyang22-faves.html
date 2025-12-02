@@ -22,7 +22,7 @@
     </li>
     <li class="list-group-item list-group-item-dark">
       <p>
-        Fave's Count: 0
+        Fave's Count: {{ faveCount() }}
       </p>
       <p>
         Fave's Fun Fact: Avg Height 0cm
@@ -37,7 +37,8 @@
           <input 
             class="form-check-input me-3" 
             type="checkbox" 
-            value="" 
+            [checked]="p.checked"
+            (change)="toggleChecked(p)"
             [id]="p.name"
           >
           <label 
