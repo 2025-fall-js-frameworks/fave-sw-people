@@ -1,6 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { SwPeopleService } from '../sw-people.service';
-import { AsyncPipe } from '@angular/common';
 import { firstValueFrom} from 'rxjs';
 
 type FaveDisplay = {
@@ -11,7 +10,7 @@ type FaveDisplay = {
 
 @Component({
   selector: 'app-akoroliova-fave-sw-people',
-  imports: [AsyncPipe],
+  imports: [],
   templateUrl: './akoroliova-fave-sw-people.html',
   styleUrl: './akoroliova-fave-sw-people.css',
 })
@@ -19,10 +18,19 @@ export class AkoroliovaFaveSwPeople implements OnInit {
   private readonly peopleSvc = inject(SwPeopleService);
   //private readonly Promise = inject(SwPeopleService);
 
-  protected people: any[] | undefined;
+  protected people : WritableSignal<FaveDisplay[]> = signal([]);
 
   async ngOnInit() {
-    this.people = await firstValueFrom (this.peopleSvc.getPeopleFromSwapiApi());
+    const people= await firstValueFrom (this.peopleSvc.getPeopleFromSwapiApi());
+    this.people.set(
+      people.map(
+        x => ({
+          name: x.name,
+          checked: false,
+          heightInCentimeters: Number(x.height),
+        })
+      )
+    );
   }
 
   protected promisesAsThenables() {
