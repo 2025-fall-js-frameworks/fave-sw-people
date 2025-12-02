@@ -80,7 +80,7 @@ export class BfunmakerFaves {
         ]
       );
       console.log(
-        data[0].name
+        data
       ); // ? ? ? 
 
     }
