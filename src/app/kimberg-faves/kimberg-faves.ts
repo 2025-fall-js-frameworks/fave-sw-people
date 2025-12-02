@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { SwPeopleService } from '../sw-people.service';
 import { firstValueFrom } from 'rxjs';
 
@@ -20,6 +20,9 @@ export class KimbergFaves implements OnInit {
 
   protected people: WritableSignal<FaveDisplay[]> = signal([]);
 
+  protected faveCount = computed(
+    () => this.people().filter(x => x.checked).length
+  );
   async ngOnInit() {
     const people = await firstValueFrom(
       this.peopleSvc.getPeopleFromSwapiApi()
@@ -35,6 +38,17 @@ export class KimbergFaves implements OnInit {
       )
     );
   }
+
+  protected readonly toggleChecked = (personToToggle: FaveDisplay) => this.people.update(
+    previousPeople => previousPeople.map(
+      person => ({
+        ...person,
+        checked: person.name === personToToggle.name
+         ? !person.checked
+         : person.checked
+      })
+    )
+  );
 
   protected promisesAsThenables() {
     const page1 = this.peopleSvc.getPeoplePageOne()
