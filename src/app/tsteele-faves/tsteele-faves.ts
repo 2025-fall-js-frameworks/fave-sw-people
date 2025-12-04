@@ -6,6 +6,7 @@ type FaveDisplay = {
   name: string;
   checked: boolean;
   heightInCentimeters: number;
+  invalidHeight: boolean;
 };
 
 @Component({
@@ -15,14 +16,44 @@ type FaveDisplay = {
   styleUrl: './tsteele-faves.css',
 })
 export class TsteeleFaves implements OnInit {
+  //
+  // DI - Dependancy Injection
+  //
   private readonly peopleSvc = inject(SwPeopleService);
 
+  //
+  // Signals...
+  //
   protected people: WritableSignal<FaveDisplay[]> = signal([]);
 
   protected faveCount = computed(
     () => this.people().filter(x => x.checked).length
   );
-  
+
+  protected avgFaveHeight = computed(
+    () => {
+
+      // Get selected Faves
+      const faves = this.people().filter(
+        person => person.checked  && !person.invalidHeight
+      )
+      // Sum their height
+      const sumOfFavesHeight = faves.reduce(
+        (acc, favePerson) => acc + favePerson.heightInCentimeters,
+        0, 
+      )
+      // Return their avg height
+      return this.faveCount() > 0
+      ? faves.length > 0
+        ? `Avg Height: ${(sumOfFavesHeight / faves.length).toFixed(2)} cm ${this.faveCount() != faves.length ? '** Some people have inavlid height info': ''}`
+        : "** All selected faves are missing height info"
+      : "No Faves Selected";
+    }
+  );
+
+  //
+  // Other medthods/funcs
+  //
   async ngOnInit() {
     const people = await firstValueFrom(
       this.peopleSvc.getPeopleFromSwapiApi()
@@ -34,6 +65,7 @@ export class TsteeleFaves implements OnInit {
           name: x.name,
           checked: false,
           heightInCentimeters: Number(x.height),
+          invalidHeight: Number.isNaN(Number(x.height)),
         })
       )
     );
@@ -50,6 +82,9 @@ export class TsteeleFaves implements OnInit {
     )
   );
 
+  //
+  // Promises
+  //
   protected promisesAsThenables() {
     const page1 = this.peopleSvc.getPeoplePageOne()
       .then(
