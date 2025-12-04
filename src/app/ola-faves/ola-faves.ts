@@ -28,7 +28,7 @@ export class OlaFaves implements OnInit {
 
   protected avgFaveHeight = computed(
     () => {
-      const favesWithHeightInfo = this.people().filter(x => x.checked /*&& !x.invalidHeight*/);
+      const favesWithHeightInfo = this.people().filter(x => x.checked && !x.invalidHeight);
       const sumHeight = favesWithHeightInfo.reduce(
         (acc, x) => acc + x.heightInCentimeters 
         , 0
@@ -37,7 +37,10 @@ export class OlaFaves implements OnInit {
       // return sumHeight / favesWithHeightInfo.length;
 
       return favesWithHeightInfo.length > 0
-        ? `${(sumHeight / favesWithHeightInfo.length).toFixed(2)}cm ${this.faveCount() != favesWithHeightInfo.length ? " **some faves have missing height information" : ""}`
+        ? `${(sumHeight / favesWithHeightInfo.length).toFixed(2)}cm 
+            ${this.faveCount() != favesWithHeightInfo.length 
+              ? " **some faves have missing height information" 
+              : "No Faves Selected"}`
         : "N/A"
       ;
     }
