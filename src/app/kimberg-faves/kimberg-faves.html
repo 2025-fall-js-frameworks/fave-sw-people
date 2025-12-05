@@ -29,6 +29,9 @@
     <p>
       Faves Fun Fact: {{ avgFaveHeight() }}
     </p>
+    <p>
+      {{ faveSkinColorCounts() }}
+    </p>
   </li>
   @if(people().length > 0){
     @for (p of people(); track p) {
