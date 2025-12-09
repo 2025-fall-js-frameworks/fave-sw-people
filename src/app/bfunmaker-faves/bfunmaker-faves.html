@@ -21,8 +21,8 @@
         Fave Fun Fact: # of People Taller: 0, # of People Shorter: 0, # of People the Same Height as Bryson: 0
       </p>
       <p>
-        <input type="text" class="form-control form-control-sm mb-1" placeholder="Who are you?">
-        <button class="btn btn-link p-0">
+        <input type="text" class="form-control form-control-sm mb-1" placeholder="Who are you?" [(ngModel)]="who">
+        <button class="btn btn-link p-0" (click)="postToMSTeams()">
           Post to MS Teams
         </button>
       </p>

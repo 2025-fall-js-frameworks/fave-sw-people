@@ -1,6 +1,7 @@
 import { Component, computed, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { SwPeopleService } from '../sw-people.service';
 import { firstValueFrom } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 type FaveDisplay = {
   name: string;
@@ -10,7 +11,7 @@ type FaveDisplay = {
 
 @Component({
   selector: 'app-bfunmaker-faves',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './bfunmaker-faves.html',
   styleUrl: './bfunmaker-faves.css',
 })
@@ -49,6 +50,12 @@ export class BfunmakerFaves implements OnInit {
         })
       )
     );
+  }
+
+  protected who = "";
+
+  protected readonly postToMSTeams = () => {
+
   }
 
   protected promisesAsThenables() {
