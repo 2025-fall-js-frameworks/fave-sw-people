@@ -1,6 +1,7 @@
 import { Component, computed, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { SwPeopleService } from '../sw-people.service';
 import { firstValueFrom} from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 type FaveDisplay = {
   name: string;
@@ -11,7 +12,7 @@ type FaveDisplay = {
 
 @Component({
   selector: 'app-akoroliova-fave-sw-people',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './akoroliova-fave-sw-people.html',
   styleUrl: './akoroliova-fave-sw-people.css',
 })
@@ -69,6 +70,10 @@ protected averageFaveHeight = computed(() => {
     })
     )
   );
+
+  protected who = "";
+
+  protected readonly postToMsTeams = () => {};
 
   protected promisesAsThenables() {
 
