@@ -13,12 +13,18 @@
         Promises fun!!!
       </button>
     </li>
-    <li class="list-group-item">
+    <li class="list-group-item bg-light">
       <p>
         Fave Count: {{ faveCount() }}
       </p>
       <p>
         Fave Fun Fact: # of People Taller: 0, # of People Shorter: 0, # of People the Same Height as Bryson: 0
+      </p>
+      <p>
+        <input type="text" class="form-control form-control-sm mb-1" placeholder="Who are you?">
+        <button class="btn btn-link p-0">
+          Post to MS Teams
+        </button>
       </p>
     </li>
     @if (people().length > 0) {
