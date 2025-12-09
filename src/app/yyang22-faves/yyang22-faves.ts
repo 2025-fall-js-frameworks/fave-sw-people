@@ -3,6 +3,7 @@ import { SwPeopleService } from '../sw-people.service';
 import { AsyncPipe } from '@angular/common';
 import { ConstantPool } from '@angular/compiler';
 import { firstValueFrom, Observable } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 type FaveDisplay = {
   name: string;
@@ -14,7 +15,7 @@ type FaveDisplay = {
 
 @Component({
   selector: 'app-yyang22-faves',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './yyang22-faves.html',
   styleUrl: './yyang22-faves.css',
 })
@@ -135,6 +136,11 @@ export class Yyang22Faves implements OnInit {
       })
     )
   );
+  protected who = "";
+
+  protected readonly postToMsTeams = () => {
+
+  }
 
   protected promiseAsThenables() {
 
