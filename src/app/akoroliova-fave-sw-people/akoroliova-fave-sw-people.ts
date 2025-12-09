@@ -73,7 +73,22 @@ protected averageFaveHeight = computed(() => {
 
   protected who = "";
 
-  protected readonly postToMsTeams = () => {};
+  protected readonly postToMsTeams = async () => {
+    try {
+      const commaDelimetedFaves = this.people()
+      .filter(x => x.checked)
+      .map(x => x.name)
+      .join(', ');
+      await this.peopleSvc.postFavesAndFunFactToMsTeams({
+        name: this.who,
+        faves: commaDelimetedFaves,
+        "fun-fact": this.averageFaveHeight(),
+      });
+    }
+    catch (err) {
+      console.warn(err);
+    }
+  };
 
   protected promisesAsThenables() {
 
