@@ -52,7 +52,7 @@ export class BfunmakerFaves implements OnInit {
 
       // Return Tick String of output 
       console.log(comparedHeights)
-      return ``
+      return `Same Height : ${comparedHeights}`
     }
   );
 
