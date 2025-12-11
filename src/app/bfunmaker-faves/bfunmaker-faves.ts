@@ -51,7 +51,7 @@ export class BfunmakerFaves implements OnInit {
 
       // Return Tick String of output 
       console.log(comparedHeights)
-      return `Same Height: ${comparedHeights.filter(x => x === "Same Height").length} | Taller: ${comparedHeights.filter(x => x === "Taller").length} | Shorter ${comparedHeights.filter(x => x === "Shorter").length}`
+      return `Same Height: ${comparedHeights.filter(x => x === "Same Height").length} | Taller: ${comparedHeights.filter(x => x === "Taller").length} | Shorter ${comparedHeights.filter(x => x === "Shorter").length} | Invalid Heights: ${this.people().filter( x => x.checked && x.invalidHeight).length}`
     }
   );
 
