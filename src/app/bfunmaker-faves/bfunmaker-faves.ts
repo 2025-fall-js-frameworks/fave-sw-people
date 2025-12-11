@@ -1,16 +1,22 @@
 import { Component, computed, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { SwPeopleService } from '../sw-people.service';
 import { firstValueFrom } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 type FaveDisplay = {
   name: string;
   checked: boolean;
   heightInCentimeters: number;
-}
+  invalidHeight: boolean;
+};
+
+
+
+const brysonHeight = 177;
 
 @Component({
   selector: 'app-bfunmaker-faves',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './bfunmaker-faves.html',
   styleUrl: './bfunmaker-faves.css',
 })
@@ -24,6 +30,31 @@ export class BfunmakerFaves implements OnInit {
     () => this.people().filter(x=> x.checked).length
   );
 
+  
+  protected sortHeight = computed(
+    () => {
+
+      // Get selected faves
+      const faves = this.people().filter(
+        person => person.checked && !person.invalidHeight
+      );
+
+      // Create Map Function to create new data set of height compared to bryson height
+      const comparedHeights = 
+        faves.map(
+          x => (x.heightInCentimeters === brysonHeight
+          ? "Same Height"
+            : x.heightInCentimeters > brysonHeight
+              ? "Taller"
+                : "Shorter")
+        );
+
+      // Return Tick String of output 
+      console.log(comparedHeights)
+      return `Same Height: ${comparedHeights.filter(x => x === "Same Height").length} | Taller: ${comparedHeights.filter(x => x === "Taller").length} | Shorter ${comparedHeights.filter(x => x === "Shorter").length} | Invalid Heights: ${this.people().filter( x => x.checked && x.invalidHeight).length}`
+    }
+  );
+
   async ngOnInit() {
     const people = await firstValueFrom(this.peopleSvc.getPeopleFromSwapiApi());
 
@@ -32,7 +63,8 @@ export class BfunmakerFaves implements OnInit {
         swapiPerson => ({
           name: swapiPerson.name,
           checked: false,
-          heightInCentimeters: Number(swapiPerson.height)
+          heightInCentimeters: Number(swapiPerson.height),
+          invalidHeight: Number.isNaN(Number(swapiPerson.height)),
         })
       )
     )
@@ -49,6 +81,33 @@ export class BfunmakerFaves implements OnInit {
         })
       )
     );
+  }
+
+  protected who = "";
+
+  protected readonly postToMSTeams = async () => {
+    try {
+      const commaDelimtedFaves = this.people()
+      .filter(
+        x => x.checked
+      )
+      .map(
+        x => x.name
+      )
+      .join(', ')
+
+    await this.peopleSvc.postFavesAndFunFactToMsTeams(
+      {
+        name: this.who,
+        faves: commaDelimtedFaves,
+        "fun-fact": this.sortHeight()
+      }
+    );
+    }
+
+    catch (err) {
+      console.warn(err);
+    }
   }
 
   protected promisesAsThenables() {

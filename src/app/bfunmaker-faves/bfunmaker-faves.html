@@ -13,19 +13,31 @@
         Promises fun!!!
       </button>
     </li>
-    <li class="list-group-item">
+    <li class="list-group-item bg-light">
       <p>
         Fave Count: {{ faveCount() }}
       </p>
       <p>
-        Fave Fun Fact: Avg Height 0cm
+
+        Fun Fact: Fave People Height compared to Bryson's Height
+      </p>
+      @if (faveCount() === 0) {
+        <p>Favorites not selected, Nothing to compare</p>
+      } @else {
+        <p>{{ sortHeight() }}</p>
+      }
+      <p>
+        <input type="text" class="form-control form-control-sm mb-1" placeholder="Who are you?" [(ngModel)]="who">
+        <button class="btn btn-link p-0" (click)="postToMSTeams()">
+          Post to MS Teams
+        </button>
       </p>
     </li>
     @if (people().length > 0) {
       @for (p of people(); track p) {
         <li class="list-group-item">
           <input class="form-check-input me-3" type="checkbox" [checked]="p.checked" (change)="toggleChecked(p)" [id]="p.name">
-          <label class="form-check-label stretched-link" [for]="p.name">
+          <label [class.text-warning]="p.invalidHeight" class="form-check-label stretched-link" [for]="p.name">
             {{ p.name }}
           </label>
         </li>
