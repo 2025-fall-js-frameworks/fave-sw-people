@@ -8,20 +8,24 @@
         <button class="btn btn-link" (click)="promisesFun()">Promises fun!</button>
     </li>
     <li class="list-group-item list-group-item-dark">
-        <p>Faves Count: </p>
+        <p>Faves Count: {{ faveCount() }}</p>
         <p>Faves Fun Fact: Avg Height 0cm</p>
     </li>
-    @if (people) {
-        @for (p of people; track $index) {
+    @if (people()) {
+        @for (p of people(); track $index) {
             <li class="list-group-item">
-                <input type="text" class="form-check-input me-2" type="checkbox" [id]="p.name">
+                <input type="text" class="form-check-input me-2"
+                    type="checkbox"
+                    [id]="p.name"
+                    [checked]="p.checked"
+                    (change)="toggleChecked(p)"
+                >
                 <label [for]="p.name" class="check-label stretched-link">{{ p.name }}</label>
             </li>
         }
     } @else {
-        <li class="list-group-item list-group-item-info">
+        <li class="lis  t-group-item list-group-item-info">
             Loading...
         </li>
     }
 </ul>
-zzzz

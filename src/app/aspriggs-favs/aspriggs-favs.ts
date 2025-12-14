@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, WritableSignal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { SwPeopleService } from '../sw-people.service';
 import { firstValueFrom } from 'rxjs';
 
@@ -18,11 +18,33 @@ type FaveDisplay = {
 export class AspriggsFavs implements OnInit {
   private readonly peopleSvc = inject(SwPeopleService);
 
-  protected people: WritableSignal<FaveDisplay[]> | undefined
+  protected people: WritableSignal<FaveDisplay[]> = signal([]);
 
+  protected faveCount = computed(() => this.people().filter(x => x.checked).length)
+
+  // Called on program start
   async ngOnInit(): Promise<void> {
-    this.people = await firstValueFrom(this.peopleSvc.getPeopleFromSwapiApi());
+    const people = await firstValueFrom(this.peopleSvc.getPeopleFromSwapiApi());
+
+    this.people.set(
+      people.map((x: any) => ({
+          name: x.name,
+          checked: false,
+          height: Number(x.height),
+        })
+      )
+    );
   }
+
+  protected readonly toggleChecked = (p: FaveDisplay) => this.people.update(
+    people => people.map(
+      person => ({
+        ...person,
+        // Set checked to the opposite of the current checked state if changed
+        checked: person.name == p.name ? !person.checked : person.checked
+      })
+    )
+  );
 
   protected promisesAsThenables(): void {
     const pageOne = this.peopleSvc.getPeoplePageOne()
