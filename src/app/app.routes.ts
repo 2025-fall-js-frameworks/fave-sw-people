@@ -9,6 +9,7 @@ import { MnguyenFaves } from './mnguyen-faves/mnguyen-faves';
 import { TsteeleFaves } from './tsteele-faves/tsteele-faves';
 import { OlaFaves } from './ola-faves/ola-faves';
 import { FsindarFaves } from './fsindar-faves/fsindar-faves';
+import { CopilotFaves } from './copilot-faves/copilot-faves';
 
 export const routes: Routes = [
   {
@@ -50,5 +51,9 @@ export const routes: Routes = [
   {
     path: "fsinder", 
     component: FsindarFaves 
+  },
+  {
+    path: "copilot", 
+    component: CopilotFaves 
   },
 ];
