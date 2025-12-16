@@ -5,6 +5,9 @@
     <li class="list-group-item">
         <button class="btn btn-link" (click)="promisesAsThenables()">Promises as "thenables"</button>
     </li>
+    <li class="list-group-item">
+        <button class="btn btn-link" (click)="promisesWithAsyncAwait()">Promises with async await</button>
+    </li>
     @if (people$ | async; as people) {
         @for (p of people; track $index) {
             <li class="list-group-item">

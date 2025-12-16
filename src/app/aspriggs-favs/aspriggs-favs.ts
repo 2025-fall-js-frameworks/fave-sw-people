@@ -14,7 +14,7 @@ export class AspriggsFavs {
   public readonly people$ = this.peopleSvc.getPeopleFromSwapiApi();
 
 
-  protected async promisesAsThenables() {
+  protected promisesAsThenables() {
     const pageOne = this.peopleSvc.getPeoplePageOne()
       .then(data => {
         console.log(data);
@@ -30,16 +30,17 @@ export class AspriggsFavs {
       .catch(error => {
         console.warn(error);
       });
+    }
 
+    protected async promisesWithAsyncAwait() {
+      try {
+        const pageOne = await this.peopleSvc.getPeoplePageOne();
+        console.log(pageOne);
 
-
-    // try {
-    //   const pageOne = await this.peopleSvc.getPeoplePageOne();
-    //   const pageTwo = await this.peopleSvc.getPeoplePageTwo();
-
-    //   console.log(pageOne, pageTwo);
-    // } catch (error) {
-    //   console.warn(error);
-    // }
-  }
+        const pageTwo = await this.peopleSvc.getPeoplePageTwo();
+        console.log(pageTwo);
+      } catch (error) {
+        console.warn(error);
+      }
+    }
 }

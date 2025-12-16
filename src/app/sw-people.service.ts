@@ -35,7 +35,7 @@ export class SwPeopleService {
   }
 
   public getPeoplePageTwo() {
-    return Promise.reject("No candy for you : - )");
+    // return Promise.reject("No candy for you : - )");
 
     const pageObvservable = this.http.get<any>('https://swapi.dev/api/people/?page=2').pipe(
       map(
