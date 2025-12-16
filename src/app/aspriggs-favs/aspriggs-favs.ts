@@ -43,4 +43,32 @@ export class AspriggsFavs {
         console.warn(error);
       }
     }
+
+    protected async promisesFun() {
+      try {
+        const pageOne = this.peopleSvc.getPeoplePageOne();
+        const pageTwo = this.peopleSvc.getPeoplePageTwo();
+
+        // All - returns all of the options
+        const data = await Promise.all([
+          pageOne,
+          pageTwo,
+        ]);
+
+        // Any - randomly picks one of the options to be assigned to data
+        // const data = await Promise.any([
+        //   pageOne,
+        //   pageTwo,
+        // ]);
+
+        // Race - the two promises race and the first to resolve is assigned to data
+        // const data = await Promise.race([
+        //   pageOne,
+        //   pageTwo,
+        // ]);
+        console.log(data);
+      } catch (error) {
+        console.warn(error);
+      }
+    }
 }
