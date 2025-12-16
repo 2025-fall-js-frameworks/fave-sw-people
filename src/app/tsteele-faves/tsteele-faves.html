@@ -33,8 +33,10 @@
       <input 
       class="form-control fortm-control-sm mb-1" 
       placeholder="Who are you"  
-      type="text">
-      <button class="btn btn-link p-0">
+      type="text"
+      [(ngModel)]="who"
+      >
+      <button class="btn btn-link p-0" (click)="postToMsTeams()">
         Post to MS Teams
       </button>
     </p>
