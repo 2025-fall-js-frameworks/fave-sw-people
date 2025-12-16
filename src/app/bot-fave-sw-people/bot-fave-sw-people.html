@@ -1,0 +1,57 @@
+<ul class="list-group">
+    <li class="list-group-item list-group-item-secondary text-black-50">
+        Bot's faves
+    </li>
+    <li class="list-group-item">
+      <button class="btn btn-link" (click)="promisesAsThenables()">
+        Promises as "thenables"
+      </button>
+      <button class="btn btn-link" (click)="promisesWithAsyncAwait()">
+        Promises with async/await and try/catch
+      </button>
+      <button class="btn btn-link" (click)="promisesFun()">
+        Promises Fun
+      </button>
+    </li>
+    <li class="list-group-item list-group-item-dark">
+      <p>
+        Fave's count: {{faveCount()}}
+      </p>
+      <p>
+        Faves Fun Fact: {{averageFaveWeight()}}
+      </p>
+
+      <p>
+        <input class="form-control form-control-sm mb-1" placeholder="your name?.. " type="text"  [(ngModel)]="who"/>
+        <button class="btn btn-link p-0" (click)="postToMsTeams()">///Post to MS Teams///</button>
+      </p>
+
+    </li>
+  @if(people().length > 0){
+    @for (p of people(); track p) {
+      <li 
+        class="list-group-item"
+      >
+        <input 
+          class="form-check-input me-3" 
+          type="checkbox" 
+          [checked]="p.checked" 
+          (change)="toggleChecked(p)"
+          [id]="p.name"
+        >
+        <label 
+          class="form-check-label stretched-link" 
+          [for]="p.name"
+          [class.text-warning]="p.invalidMass"
+          [title]="p.invalidMass ? 'Mass: unknown' : `Mass: ${p.massInKilograms} kg`"
+        >
+          {{ p.name }}
+        </label>
+      </li>
+    }
+  } @else {
+    <li class="list-group-item list-group-item-info">
+      Loading...
+    </li>
+  }
+</ul>
