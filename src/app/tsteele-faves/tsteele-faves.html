@@ -29,6 +29,15 @@
     <p>
       Faves Fun Fact: {{ avgFaveHeight() }}
     </p>
+    <p>
+      <input 
+      class="form-control fortm-control-sm mb-1" 
+      placeholder="Who are you"  
+      type="text">
+      <button class="btn btn-link p-0">
+        Post to MS Teams
+      </button>
+    </p>
   </li>
   @if(people().length > 0){
     @for (p of people(); track p) {
