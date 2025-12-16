@@ -1,45 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { EMPTY, expand, firstValueFrom, map, reduce, tap } from 'rxjs';
+// RxJS
+import { EMPTY, map, expand, tap, reduce, firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SwPeopleService {
-  private http = inject(HttpClient);
+    private http = inject(HttpClient);
 
   public getPeopleFromSwapiApi() {
-
     return this.http.get<any>('https://swapi.dev/api/people').pipe(
-      expand(
-        page => page.next
-          ? this.http.get<any>(page.next)
-          : EMPTY
-      ),
-      map(
-        response => response.results
-      ),
-      tap(
-        x => console.log(x)
-      ),
-      reduce(
-        (acc: any[], people) => [
-          ...acc,
-          ...people,
-        ],
-        [],
-      ),
-      map(
-        people => people.sort(
-          (a: any, b: any) => a.name.localeCompare(b.name)
-        )
-      ),
+      expand(page => page.next ? this.http.get<any>(page.next) : EMPTY), // Opens the next page
+      map(response => response.results), // Gets results from SWAPI
+      reduce((acc, people) => [ // Adds all people from each page to array of results
+        ...acc,
+        ...people
+      ]),
+      map(people => people.sort((a: any, b: any) => a.name.localeCompare(b.name))), // Sorts people alphabetically
     );
-    
   }
 
-  public getPeoplePageOne() {
 
+  public getPeoplePageOne() {
     // return Promise.reject("No soup for you : - )");
 
     const pageObvservable = this.http.get<any>('https://swapi.dev/api/people/?page=1').pipe(
@@ -52,7 +35,6 @@ export class SwPeopleService {
   }
 
   public getPeoplePageTwo() {
-
     // return Promise.reject("No candy for you : - )");
 
     const pageObvservable = this.http.get<any>('https://swapi.dev/api/people/?page=2').pipe(
