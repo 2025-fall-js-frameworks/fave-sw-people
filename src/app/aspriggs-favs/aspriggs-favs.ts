@@ -1,6 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { SwPeopleService } from '../sw-people.service';
 import { AsyncPipe } from '@angular/common';
+import { Observable } from 'rxjs';
+
+
+type FaveDisplay = {
+  name: string;
+  checked: boolean;
+  height: number;
+}
 
 @Component({
   selector: 'app-aspriggs-favs',
@@ -8,13 +16,16 @@ import { AsyncPipe } from '@angular/common';
   templateUrl: './aspriggs-favs.html',
   styleUrl: './aspriggs-favs.css',
 })
-export class AspriggsFavs {
+export class AspriggsFavs implements OnInit {
   private readonly peopleSvc = inject(SwPeopleService);
 
-  public readonly people$ = this.peopleSvc.getPeopleFromSwapiApi();
+  protected people$: Observable<any[]> | undefined
 
+  ngOnInit(): void {
+    this.people$ = this.peopleSvc.getPeopleFromSwapiApi();
+  }
 
-  protected promisesAsThenables() {
+  protected promisesAsThenables(): void {
     const pageOne = this.peopleSvc.getPeoplePageOne()
       .then(data => {
         console.log(data);
@@ -32,7 +43,7 @@ export class AspriggsFavs {
       });
     }
 
-    protected async promisesWithAsyncAwait() {
+    protected async promisesWithAsyncAwait(): Promise<void> {
       try {
         const pageOne = await this.peopleSvc.getPeoplePageOne();
         console.log(pageOne);
@@ -44,7 +55,7 @@ export class AspriggsFavs {
       }
     }
 
-    protected async promisesFun() {
+    protected async promisesFun(): Promise<void> {
       try {
         const pageOne = this.peopleSvc.getPeoplePageOne();
         const pageTwo = this.peopleSvc.getPeoplePageTwo();
