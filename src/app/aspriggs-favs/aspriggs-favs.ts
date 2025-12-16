@@ -12,4 +12,34 @@ export class AspriggsFavs {
   private readonly peopleSvc = inject(SwPeopleService);
 
   public readonly people$ = this.peopleSvc.getPeopleFromSwapiApi();
+
+
+  protected async promisesAsThenables() {
+    const pageOne = this.peopleSvc.getPeoplePageOne()
+      .then(data => {
+        console.log(data);
+
+        const pageTwo = this.peopleSvc.getPeoplePageTwo()
+          .then(data => {
+            console.log(data);
+          })
+          .catch(error => {
+            console.warn(error);
+          });
+      })
+      .catch(error => {
+        console.warn(error);
+      });
+
+
+
+    // try {
+    //   const pageOne = await this.peopleSvc.getPeoplePageOne();
+    //   const pageTwo = await this.peopleSvc.getPeoplePageTwo();
+
+    //   console.log(pageOne, pageTwo);
+    // } catch (error) {
+    //   console.warn(error);
+    // }
+  }
 }
