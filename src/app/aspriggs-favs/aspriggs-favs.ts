@@ -1,6 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, WritableSignal } from '@angular/core';
 import { SwPeopleService } from '../sw-people.service';
-import { AsyncPipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 
 
@@ -19,7 +18,7 @@ type FaveDisplay = {
 export class AspriggsFavs implements OnInit {
   private readonly peopleSvc = inject(SwPeopleService);
 
-  protected people: any[] | undefined
+  protected people: WritableSignal<FaveDisplay[]> | undefined
 
   async ngOnInit(): Promise<void> {
     this.people = await firstValueFrom(this.peopleSvc.getPeopleFromSwapiApi());
@@ -43,43 +42,43 @@ export class AspriggsFavs implements OnInit {
       });
     }
 
-    protected async promisesWithAsyncAwait(): Promise<void> {
-      try {
-        const pageOne = await this.peopleSvc.getPeoplePageOne();
-        console.log(pageOne);
+  protected async promisesWithAsyncAwait(): Promise<void> {
+    try {
+      const pageOne = await this.peopleSvc.getPeoplePageOne();
+      console.log(pageOne);
 
-        const pageTwo = await this.peopleSvc.getPeoplePageTwo();
-        console.log(pageTwo);
-      } catch (error) {
-        console.warn(error);
-      }
+      const pageTwo = await this.peopleSvc.getPeoplePageTwo();
+      console.log(pageTwo);
+    } catch (error) {
+      console.warn(error);
     }
+  }
 
-    protected async promisesFun(): Promise<void> {
-      try {
-        const pageOne = this.peopleSvc.getPeoplePageOne();
-        const pageTwo = this.peopleSvc.getPeoplePageTwo();
+  protected async promisesFun(): Promise<void> {
+    try {
+      const pageOne = this.peopleSvc.getPeoplePageOne();
+      const pageTwo = this.peopleSvc.getPeoplePageTwo();
 
-        // All - returns all of the options
-        const data = await Promise.all([
-          pageOne,
-          pageTwo,
-        ]);
+      // All - returns all of the options
+      const data = await Promise.all([
+        pageOne,
+        pageTwo,
+      ]);
 
-        // Any - randomly picks one of the options to be assigned to data
-        // const data = await Promise.any([
-        //   pageOne,
-        //   pageTwo,
-        // ]);
+      // Any - randomly picks one of the options to be assigned to data
+      // const data = await Promise.any([
+      //   pageOne,
+      //   pageTwo,
+      // ]);
 
-        // Race - the two promises race and the first to resolve is assigned to data
-        // const data = await Promise.race([
-        //   pageOne,
-        //   pageTwo,
-        // ]);
-        console.log(data);
-      } catch (error) {
-        console.warn(error);
-      }
+      // Race - the two promises race and the first to resolve is assigned to data
+      // const data = await Promise.race([
+      //   pageOne,
+      //   pageTwo,
+      // ]);
+      console.log(data);
+    } catch (error) {
+      console.warn(error);
     }
+  }
 }
