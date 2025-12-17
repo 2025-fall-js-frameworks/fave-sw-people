@@ -8,10 +8,10 @@
         <button class="btn btn-link" (click)="promisesFun()">Promises fun!</button>
     </li>
     <li class="list-group-item list-group-item-dark">
-        <p>Faves Count</p>
+        <p>Faves Count: </p>
         <p>Faves Fun Fact: Avg Height 0cm</p>
     </li>
-    @if (people$ | async; as people) {
+    @if (people) {
         @for (p of people; track $index) {
             <li class="list-group-item">
                 <input type="text" class="form-check-input me-2" type="checkbox" [id]="p.name">
@@ -24,3 +24,4 @@
         </li>
     }
 </ul>
+zzzz
